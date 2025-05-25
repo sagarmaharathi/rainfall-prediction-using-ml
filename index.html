@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rainfall Prediction 🌧️</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #87ceeb, #e0f7fa);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .cloud {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.8;
+      box-shadow: 60px 10px #fff, 120px 20px #fff;
+      width: 100px;
+      height: 60px;
+      animation: moveClouds 60s linear infinite;
+    }
+
+    .cloud:nth-child(2) {
+      top: 80px;
+      left: -200px;
+      animation-duration: 90s;
+      opacity: 0.6;
+    }
+
+    .cloud:nth-child(3) {
+      top: 30px;
+      left: -300px;
+      animation-duration: 120s;
+      opacity: 0.4;
+    }
+
+    @keyframes moveClouds {
+      0% { transform: translateX(-300px); }
+      100% { transform: translateX(100vw); }
+    }
+
+    .card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-header {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { background-color: #007bff; }
+      50% { background-color: #3399ff; }
+      100% { background-color: #007bff; }
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    input.form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary, .btn-success {
+      border-radius: 2rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover, .btn-success:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .alert-info {
+      font-size: 1.2rem;
+    }
+
+    nav.navbar {
+      z-index: 100;
+      animation: slideDown 1s ease forwards;
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    @keyframes slideDown {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .typewriter h1 {
+      overflow: hidden;
+      border-right: .15em solid orange;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .05em;
+      animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: orange; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Clouds -->
+  <div class="cloud" style="top: 50px; left: -150px;"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">🌦️ Rainfall Prediction App</a>
+    </div>
+  </nav>
+
+  <!-- Title -->
+  <div class="container text-center mt-5 typewriter">
+    <h1>Rainfall Forecast with Real-Time Weather 🌧️</h1>
+  </div>
+
+  <!-- Main Form Container -->
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white text-center py-3">
+            <h4 class="mb-0">Predict Rainfall 🌧️</h4>
+          </div>
+          <div class="card-body p-4">
+
+            <!-- Manual Input Form -->
+            <form action="/predict" method="POST">
+              <div class="mb-3">
+                <label for="pressure" class="form-label">Pressure 🌡️</label>
+                <input type="number" step="0.1" class="form-control" name="pressure" id="pressure" required>
+              </div>
+              <div class="mb-3">
+                <label for="dewpoint" class="form-label">Dewpoint 💧</label>
+                <input type="number" step="0.1" class="form-control" name="dewpoint" id="dewpoint" required>
+              </div>
+              <div class="mb-3">
+                <label for="humidity" class="form-label">Humidity 💦</label>
+                <input type="number" step="0.1" class="form-control" name="humidity" id="humidity" required>
+              </div>
+              <div class="mb-3">
+                <label for="cloud" class="form-label">Cloud ☁️</label>
+                <input type="number" step="0.1" class="form-control" name="cloud" id="cloud" required>
+              </div>
+              <div class="mb-3">
+                <label for="sunshine" class="form-label">Sunshine ☀️</label>
+                <input type="number" step="0.1" class="form-control" name="sunshine" id="sunshine" required>
+              </div>
+              <div class="mb-3">
+                <label for="winddirection" class="form-label">Wind Direction 🧭</label>
+                <input type="number" step="0.1" class="form-control" name="winddirection" id="winddirection" required>
+              </div>
+              <div class="mb-3">
+                <label for="windspeed" class="form-label">Wind Speed 🌬️</label>
+                <input type="number" step="0.1" class="form-control" name="windspeed" id="windspeed" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100 mt-3">💻 Predict from Manual Input</button>
+            </form>
+
+            <!-- Real-Time City Weather Prediction -->
+            <hr class="my-4">
+            <form action="/realtime" method="POST">
+              <div class="mb-3">
+                <label for="city" class="form-label">🌍 Enter City Name</label>
+                <input type="text" name="city" id="city" class="form-control" placeholder="e.g., Bangalore" required>
+              </div>
+              <button type="submit" class="btn btn-success w-100">🌐 Get Weather and Predict</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if prediction_result %}
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-6">
+        <div class="alert alert-info text-center shadow-sm" role="alert">
+          <strong>Prediction Result:</strong> {{ prediction_result }}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if weather_data %}
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-header bg-info text-white text-center">
+            <strong>🌦️ Weather for {{ city }}</strong>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              {% for label, value in weather_data.items() %}
+              <li class="list-group-item d-flex justify-content-between">
+                <span>{{ label }}</span>
+                <span>{{ value }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
